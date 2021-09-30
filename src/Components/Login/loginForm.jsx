@@ -74,7 +74,7 @@ const LoginForm = () => {
 
     const checkVersion = useCallback(async () => {
         const currentVersion = process.env.REACT_APP_VERSION;
-        const githubFetch = await fetch("https://raw.githubusercontent.com/Xxsource98/V-Librus/main/.version");
+        const githubFetch = await fetch("https://raw.githubusercontent.com/Xxsource98/V-Librus/master/.version");
         const githubVersion = await githubFetch.text();
 
         if (currentVersion !== githubVersion) {
