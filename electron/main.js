@@ -1,11 +1,13 @@
 const { app, BrowserWindow, globalShortcut, shell } = require('electron');
 const isDev = require('electron-is-dev');
 const path = require('path');
+const electronLocalshortcut = require('electron-localshortcut')
 
 const LibrusData = require('./librusData');
 const HandleMessages = require('./handleMessages');
 
 var librusData = new LibrusData();
+var mainWindow = null;
 
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
@@ -39,9 +41,7 @@ app.whenReady().then(() => {
 });
 
 const registerShortcuts = () => {
-    globalShortcut.unregister('Ctrl+0');
-    globalShortcut.unregister('Ctrl+-');
-    globalShortcut.unregister('Ctrl+Shift+R');
+    globalShortcut.unregisterAll();
 
     const zoomOutBind = process.platform === "darwin" ? 'Cmd+-' : 'Ctrl+-';
     const zoomInBind = process.platform === "darwin" ? 'Cmd+=' : 'Ctrl+=';
@@ -65,7 +65,7 @@ const registerShortcuts = () => {
     });
 
     if (isDev) {
-        globalShortcut.register('Ctrl+Shift+R', () => {
+        globalShortcut.registerAll(['CommandOrControl+R','CommandOrControl+Shift+R', 'F5'], () => {
             librusData.refreshData();
 
             mainWindow.reload();
