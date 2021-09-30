@@ -1,0 +1,183 @@
+@import "../../style.scss";
+
+.login-form-container {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+
+    .login-in-form {
+        background-color: #1f252c;
+        width: 450px;
+        border-radius: 10px;
+        height: 550px;
+        user-select: none;
+
+        h2 {
+            margin-top: 65px;
+            font-size: 2rem;
+            color: #e2fcff;
+            text-align: center;
+        }
+
+        .login-form {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #e2fcff;
+
+            
+
+
+            span {
+                position: relative;
+                display: flex;
+                margin-top: 25px;
+                margin-bottom: 25px;
+                left: -65px;
+                font-size: 1rem;
+
+                .rememberme-text {
+                    margin-left: 5px;
+                }
+            }
+
+            input[type="text"], input[type="password"]{
+                border: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+                background: none;
+                color: #e2fcff;
+                outline: none;
+                width: 280px;
+                height: 40px;
+                font-family: 'Quicksand', sans-serif;
+                padding-left: 8px;
+                transition: all 0.3s ease;
+                font-size: 1rem;
+                color: #e2fcff;
+
+                &:focus {
+                    border-bottom: 1px solid rgba(255, 255, 255, 1);
+                    width: 285px;
+                }
+            }
+
+            input[type="text"]:not(:invalid), input[type="password"]:not(:invalid) {
+                border-bottom: 1px solid rgba(255, 255, 255, 1);
+                width: 285px;
+            }
+
+            input[type="submit"] {
+                border: 1px solid #fff;
+                background: none;
+                color: #fff;
+                width: 170px;
+                height: 50px;
+                cursor: pointer;
+                font-family: 'Quicksand', sans-serif;
+                transition: all 0.3s ease;
+                font-size: 1.2rem;
+                
+                &:hover {
+                    background-color: #e2fcff;
+                    color: $backgroundColor;
+                }
+            }
+
+            input[type="checkbox"] {
+                margin-top: 4px;
+                transform: scale(1.3);
+            }
+        }
+
+        p {
+            position: absolute;
+            font-size: 0.8rem;
+            color: #7E7E7E;
+            bottom: 2px;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+
+        p.login-form-header {
+            position: relative;
+            font-size: 1rem;
+            color: #fff;
+            left: -110px;
+            top: 10px;
+            text-align: left;
+            transform: none;
+        }
+
+        p.update {
+            bottom: -48px;
+            font-size: 1.05rem;
+            width: 100%;
+            text-align: center;
+            color: #eb4d4b;
+            font-weight: 300;
+
+            a {
+                text-decoration: none;
+                color: #eb4d4b;
+                font-weight: 400;
+            }
+        }
+
+        .status-div {
+            display: flex;
+            justify-content: center;
+            width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+
+            p {
+                position: relative;
+                bottom: 0px;
+                left: 0;
+                transform: none;
+            }
+    
+            p.status-msg {
+                color: #eb4d4b;
+                font-size: 1.1rem;
+                font-weight: 400;
+                text-align: center;
+            }
+    
+            p.status-msg.login {
+                color: #2ecc71;
+            }
+
+            img {
+                display: none;
+                position: relative;
+                top: 17.5px;
+                margin-right: 15px;
+                width: 24px;
+                height: 24px;
+                animation: rotate 1s infinite;
+            }
+
+            img.load {
+                display: block;
+            }
+    
+            @keyframes rotate {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        } 
+    }
+}

@@ -1,0 +1,105 @@
+.widgets {
+    display: flex;
+    width: 97vw;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    overflow-x: auto;
+    padding-bottom: 15px;
+    transform-origin: left right;
+
+    .widget {
+        position: relative;
+        background-color: rgb(49, 49, 49);
+        border-radius: 10px;
+        word-wrap: break-word;
+        height: 270px;
+        min-width: 250px;
+        max-width: 250px;
+        transition: all 0.3s ease;
+
+        &:not(&:last-child) {
+            margin-right: 15px;
+        }
+
+        .widget-header {
+            display: flex;
+
+            .count-days {
+                font-size: 1.5rem;
+                margin: 0;
+                position: relative;
+                top: 10px;
+                left: 5px;
+                font-weight: 400;
+            }
+
+            .orig-date {
+                position: relative;
+                left: 10px;
+                top: 20px;
+                margin: 0;
+                color: #dadada;
+                font-size: 0.9rem;
+            }
+        }
+
+        .type {
+            margin: 0;
+            position: relative;
+            left: 10px;
+            top: 15px;
+            width: 90%;
+        }
+
+        .description {
+            margin: 0;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 0.9rem;
+        }
+    }
+
+    .small {
+        height: 270px * 0.85;
+        min-width: 250px * 0.85;
+        max-width: 250px * 0.85;
+
+        .type {
+            font-size: 1rem;
+        }
+
+        .description {
+            font-size: 0.8rem;
+        }
+    }
+
+    .absence {
+        background-color: #575fcf;
+    }
+
+    .appealshifts {
+        background-color: #2980b9;
+    }
+
+    .test {
+        background-color: #c0392b;
+    }
+}
+
+.all {
+    overflow-x: hidden;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .widget {
+        left: -10px;
+        margin-left: 15px;
+        margin-bottom: 15px;
+
+        &:not(&:last-child) {
+            margin-right: 0px;
+        }
+    }
+}

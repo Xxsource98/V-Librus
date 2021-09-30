@@ -1,0 +1,106 @@
+@import "../../style.scss";
+
+.titlebar {
+    display: flex;
+    justify-content: center;
+    background-color:#171a1b;
+    color: white;
+    align-items: center;
+    height: 30px;
+    font-size: 0.9rem;
+    user-select: none;
+    -webkit-app-region: drag;
+    z-index: 999;
+
+    .window-items {
+        position: absolute;
+        left: 0;
+        text-align: left;
+        -webkit-app-region: no-drag;
+
+        ul {
+            position: relative;
+            list-style: none;
+            left: -35px;
+            display: flex;
+            width: auto;
+            text-align: center;
+
+            li {
+                position: relative;
+                margin-right: 8px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                width: auto;
+                text-align: center;
+                padding-left: 5px;
+                padding-right: 5px;
+                transition: background-color 0.1s ease;
+
+                ul {
+                    position: absolute;
+                    top: 30px;
+                    display: none;
+                    background-color: #1f2122;
+                    left: 0;
+                    padding: 0;
+                    min-width: 160px;
+                    z-index: 10;
+
+                    li {
+                        padding: 0;
+                        width: 100%;
+                        transition: background-color 0.1s ease;
+
+                        span {
+                            margin-left: 5px;
+                        }
+
+                        span.right {
+                            position: absolute;
+                            right: 6px;
+                            text-align: right;
+                            font-size: 0.8rem;
+                            color: rgb(172, 172, 172);
+                        }
+
+                        span[data-disabled="true"] {
+                            color: rgb(138, 138, 138)
+                        }
+
+                        &:hover {
+                            background-color: #282b2c;
+                        }
+                    }
+                }
+
+                &:hover {
+                    background-color: #1f2122;
+
+                    ul {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+
+    .window-mod {
+        position: absolute;
+        width: 75px;
+        height: 30px;
+        font-size: 1.2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        -webkit-app-region: no-drag;
+        right: 10px;
+
+        img {
+            width: 15px;
+            text-align: center;
+            cursor: pointer;
+        }
+    }
+}

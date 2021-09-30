@@ -1,0 +1,140 @@
+.grades {
+    display: flex;
+    width: 95vw;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    justify-content: center;
+
+    table {
+        vertical-align: top;
+
+        tr {
+            td {
+                &:nth-child(1) {
+                    border-right: 0.1px solid #393e49;
+                }
+            }
+        }
+    }
+
+    .grade-widgets {
+        position: relative;
+        top: 0px;
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 7px;
+
+        .grade-widget {
+            position: relative;
+            min-width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            text-align: center;
+            margin-right: 7px;     
+            display:flex;
+            justify-content: center;
+            align-items: center;
+
+            p {
+                user-select: none;
+                cursor: default;
+                font-weight: 500;
+            }
+
+            .grade-widget-desc {
+                user-select: none;
+                visibility: hidden;
+                opacity: 0;
+                position: absolute;
+                background: inherit;
+                border-radius: 8px;
+                top: -70px;
+                left: 15px;
+                z-index: 2;
+                font-size: 0.75rem;
+                width: 220px;
+                min-height: 155px;
+                padding-bottom: 15px;
+                transition: all 0.2s ease;
+
+                .grade-widget-desc-header {
+                    h3 {
+                        margin: 0;
+                        padding: 10px;
+                    }
+
+                    span {
+                        position: relative;
+                        margin: 6px;
+                        top: -10px;
+                        color: #cfcfcf;
+                    }
+                }
+
+                .grade-widget-desc-row {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-left: 5px;
+                    margin-right: 5px;
+                    padding: 3px;
+
+                    &:nth-child(2) {
+                        font-weight: 500;
+                        text-align: right;
+                        width: 200px;
+                    }
+                }
+            }
+        }
+
+        .grade-widget.active {
+            .grade-widget-desc {
+                visibility: visible;
+                opacity: 0.9;
+                left: 25px;
+            }
+        }
+    }
+}
+
+.change-semester {
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: space-between;
+    width: 200px;
+
+    img {
+        cursor: pointer;
+        width: 32px;
+        height: 32px;
+        transition: all 0.3s ease;
+
+        &:first-child {
+            transform: rotate(-180deg);
+        }
+
+        &:first-child:hover {
+            transform: scale(1.05) rotate(-180deg);
+        }
+
+        &:last-child:hover {
+            transform: scale(1.05) rotate(0deg);
+        }
+    }
+
+    p {
+        font-weight: 400;
+        position: relative;
+        top: -10px;
+        font-size: 1rem;
+    }
+
+    .disabled {
+        filter: brightness(0.4);
+        cursor:initial;
+    }
+}

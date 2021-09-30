@@ -1,0 +1,90 @@
+{
+  "name": "v-librus",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Xxsource98 <fake@xx.com>",
+  "license": "GPL-3.0",
+  "description": "V-Librus is an application which fetch your all Librus.",
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "base-64": "^1.0.0",
+    "electron-is-dev": "^2.0.0",
+    "electron-shortcut": "^0.5.0",
+    "librus-api": "git://github.com/Mati365/librus-api.git",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-promise-tracker": "^2.1.0",
+    "react-router-dom": "^5.3.0",
+    "react-scripts": "4.0.3",
+    "sass": "^1.39.0",
+    "web-vitals": "^1.1.2",
+    "write-file-p": "^1.0.8"
+  },
+  "devDependencies": {
+    "electron": "^14.0.0",
+    "electron-builder": "^22.11.7",
+    "concurrently": "^6.2.1",
+    "wait-on": "^6.0.0"
+  },
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "concurrently \"react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",
+    "build": "react-scripts build",
+    "electron-build:Windows": "react-scripts build && electron-builder -c.extraMetadata.main=electron/main.js --windows",
+    "electron-build:MacOS": "react-scripts build && electron-builder -c.extraMetadata.main=electron/main.js --mac",
+    "electron-build:Linux": "react-scripts build && electron-builder -c.extraMetadata.main=electron/main.js --linux"
+  },
+  "homepage": "./",
+  "build": {
+    "appId": "com.xxsource98.vlibrus",
+    "productName": "V-Librus",
+    "directories": {
+      "output": "electron-build"
+    },
+    "compression": "store",
+    "files": [
+      "node_modules/**/*",
+      "electron/*",
+      "build/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "/public/icon.png",
+      "target": "NSIS"
+    },
+    "mac": {
+      "icon": "/public/icon.png",
+      "target": "dmg"
+    },
+    "linux": {
+      "icon": "/public/icon.png",
+      "target": "snap",
+      "category": "Utility"
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false
+    },
+    "extends": null
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,235 @@
+@import "../../style.scss";
+
+.main-panel {
+    position: relative;
+    width: 100vw;
+    height: 96vh;
+    overflow-y: auto;
+    transform-origin: top bottom;;
+
+    .panel-section {   
+        position: relative;
+        width: auto;
+
+        .panel-header {
+            position: relative;
+            left: 15px;
+            width: 50%;
+            font-size: 1.4rem;
+            font-weight: 400;
+        }
+
+        .all-events-link-container {
+            display: flex;
+            justify-content: right;
+            margin-top: 5px;
+
+            .all-events-link {
+                position: relative;      
+                text-decoration: none;
+                color: #fff;
+                font-weight: 400;
+                text-align: right;
+                right: 35px;
+                font-size: 1.2rem;
+                transition: all 0.2s ease;
+                width: auto;
+                display: block;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 30px;
+                    left: 0;
+                    width: 100%;
+                    height: 1px;
+                    transition: all 0.2s ease;
+                    opacity: 0;
+                    background: #e9e9e9;
+                    border-radius: 5px;
+                }
+
+                &:hover::after {
+                    opacity: 1;
+                    transform: translate3d(0, -0.2em, 0);
+                }
+
+                &:hover {
+                    color: #e9e9e9;
+                }
+            }
+        }
+
+        .shortcuts {
+            display: flex;
+            width: 97vw;
+            margin-left: auto;
+            margin-right: auto;
+            height: auto;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            transform-origin: left right;
+            justify-content: center;
+            position: relative;
+
+            .shortcut {
+                position: relative;
+                height: 270px * 0.85;
+                min-width: 250px * 0.85;
+                max-width: 250px * 0.85;
+                border-radius: 15px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                background: rgb(58, 16, 16);
+                transition: all 0.3s ease;
+                text-decoration: none;
+                color: #fff;
+                outline: none;
+                filter: brightness(0.9);
+
+                img {
+                    transition: all 0.3s ease;
+                    position: relative;
+                    top: -20px;
+                    width: 78px;
+                }
+
+                p {      
+                    position: absolute; 
+                    font-size: 1.6rem;
+                    font-weight: 400;
+                    bottom: 10px;
+                }
+
+                &:not(&:last-child) {
+                    margin-right: 20px;
+                }
+
+                &:hover {
+                    filter: brightness(0.8);
+
+                    img {
+                        transform: scale(1.02);
+                    }
+                }
+
+                @media screen and (max-width: 1010px) {
+                    height: 270px * 0.75;
+                    min-width: 250px * 0.75;
+                    max-width: 250px * 0.75;
+
+                    p {
+                        font-size: 1.4rem;
+                    }
+                }
+            }
+
+            @media screen and (max-width: 986px) {
+                justify-content: left;
+            }
+        }
+
+        .shortcuts.less {
+            justify-content: center;
+        }
+
+        .navigate-buttons {
+            position: absolute;
+            right: 25px;
+            top: -5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 65px;
+
+            img {
+                position: relative;
+                cursor: pointer;
+                width: 32px;
+                transition: all 0.3s ease;
+
+                &:first-child {
+                    transform: rotate(-180deg);
+                }
+
+                &:first-child:hover {
+                    transform: scale(1.05) rotate(-180deg);
+                }
+
+                &:last-child:hover {
+                    transform: scale(1.05) rotate(0deg);
+                }
+            }
+        }
+
+        table {
+            position: relative;
+            table-layout: fixed;
+            width: 100vw;
+            border-collapse: collapse;
+            position: relative;
+            height: 100%;
+    
+            tr {
+                position: relative;
+                
+                td, th {
+                    border: none;
+                    border: 0.1px solid #393e49;
+                    margin: 0;
+                    font-size: 1.05rem;
+                    word-wrap: break-word;   
+                    top: 0;
+                    padding: 5px;
+                    font-weight: 400;
+                }
+    
+                &:nth-child(even) {
+                    background:  #1e242b;
+                }
+    
+                &:nth-child(odd) {
+                    background:  #191f25;
+                }
+            }
+            
+            @media screen and (max-width: 1010px) {
+                width: 100vw;
+                transform: scale(1) translateY(0);
+    
+                tr {
+                    td, th {
+                        font-size: 0.85rem;
+                    }
+                }
+            }
+        }
+
+        table.under-line {
+            tr {
+                td, th {
+                    border: none;
+                    border-bottom: 0.1px solid #393e49;
+                }   
+            }
+        }
+    }
+
+    .panel-credits {
+        position: fixed;
+        bottom: 5px;
+        right: 5px;
+        text-align: right;
+        
+        a {
+            font-size: 0.98rem;
+            font-weight: 400;
+            text-decoration: none;
+            position: relative;
+            margin: 0;
+            color: #919191;
+        }
+    }
+}
