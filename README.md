@@ -12,8 +12,8 @@ V-Librus is an application which fetch your all Librus (Polish electronic diary)
 ```
 
 # Build
-<b>Windows</b>: ```npm run electron-build:Windows``` 
-<b>Linux</b>: ```npm run electron-build:Linux``` Builed file will be "snap" so first install "snapd" package and later use: ```snap install --dangerous ./outputFile.snap```
+<b>Windows</b>: ```npm run electron-build:Windows``` <br/><br/>
+<b>Linux</b>: ```npm run electron-build:Linux``` Builed file will be "snap" so first install "snapd" package and later use: ```snap install --dangerous ./outputFile.snap``` <br/><br/>
 <b>Mac OS</b>: ```npm run electron-build:MacOS```
 
 # Images
