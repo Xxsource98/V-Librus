@@ -3,6 +3,8 @@ import { trackPromise, usePromiseTracker  } from 'react-promise-tracker';
 import { globalDataContext } from '../../globalContext';
 import { Redirect, useLocation } from 'react-router-dom';
 
+import appVersion from '../../.version';
+
 import './loginForm.scss';
 import LoadingIcon from '../../Images/img/Loading.png';
 
@@ -73,8 +75,8 @@ const LoginForm = () => {
     }, [setContextData, location]);
 
     const checkVersion = useCallback(async () => {
-        const currentVersion = process.env.REACT_APP_VERSION;
-        const githubFetch = await fetch("https://raw.githubusercontent.com/Xxsource98/V-Librus/master/.version");
+        const currentVersion = await fetch(appVersion).then(r => r.text());
+        const githubFetch = await fetch("https://raw.githubusercontent.com/Xxsource98/V-Librus/master/src/.version");
         const githubVersion = await githubFetch.text();
 
         if (currentVersion !== githubVersion) {

@@ -10,6 +10,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "base-64": "^1.0.0",
+    "cross-env": "^7.0.3",
     "electron-is-dev": "^2.0.0",
     "electron-shortcut": "^0.5.0",
     "librus-api": "git://github.com/Mati365/librus-api.git",
@@ -30,7 +31,7 @@
   },
   "main": "electron/main.js",
   "scripts": {
-    "start": "concurrently \"react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",
+    "start": "concurrently \"cross-env BROWSER=none react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "react-scripts build",
     "electron-build:Windows": "react-scripts build && electron-builder -c.extraMetadata.main=electron/main.js --windows",
     "electron-build:MacOS": "react-scripts build && electron-builder -c.extraMetadata.main=electron/main.js --mac",
