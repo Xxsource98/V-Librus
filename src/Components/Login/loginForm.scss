@@ -33,9 +33,6 @@
             align-items: center;
             color: #e2fcff;
 
-            
-
-
             span {
                 position: relative;
                 display: flex;
@@ -69,7 +66,7 @@
                 }
             }
 
-            input[type="text"]:not(:invalid), input[type="password"]:not(:invalid) {
+            input[type="text"]:not(:empty), input[type="password"]:not(:empty) {
                 border-bottom: 1px solid rgba(255, 255, 255, 1);
                 width: 285px;
             }
