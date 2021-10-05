@@ -59,7 +59,8 @@ const Schedule = () => {
                 dayObject = null
             }) => {
                 let returnData = null;
-                const hasTwoFields = dayObject.insideFields.secondField !== null;
+                
+                const hasTwoFields = dayObject.insideFields === undefined ? false : dayObject.insideFields.secondField !== null;
 
                 if (hasTwoFields) {
                     returnData = (
