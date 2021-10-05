@@ -28,7 +28,8 @@ const Schedule = () => {
             if (dayObject !== undefined) {
                 return {
                     title: dayObject === null ? "" : dayObject.title,
-                    flag: dayObject === null ? "" : dayObject.flag
+                    flag: dayObject === null ? "" : dayObject.flag,
+                    insideFields: dayObject === null ? { firstField: null, secondField: null } : dayObject.insideFields
                 }
             }
 
@@ -57,12 +58,37 @@ const Schedule = () => {
                 dayIndex = 0, 
                 dayObject = null
             }) => {
+                let returnData = null;
+                const hasTwoFields = dayObject.insideFields.secondField !== null;
+
+                if (hasTwoFields) {
+                    returnData = (
+                        <>
+                            <div>
+                                <span>{dayObject.insideFields.firstField.flag}</span>
+                            </div>
+                            <p>{dayObject.insideFields.firstField.title}</p>
+                            <div className="second-flag">
+                                <span>{dayObject.insideFields.secondField.flag}</span>
+                            </div>
+                            <p className="second-flag">{dayObject.insideFields.secondField.title}</p>
+                        </>
+                    )
+                }
+                else {
+                    returnData = (
+                        <>
+                            <div>
+                                <span>{dayObject.flag}</span>
+                            </div>
+                            <p>{dayObject.title}</p>
+                        </>
+                    )
+                }
+                
                 return (
                     <td className={` ${today === dayIndex ? "selected" : "" } ${dayObject.flag !== "" ? "flag" : ""}`}>
-                        <div>
-                            <span>{dayObject.flag}</span>
-                        </div>
-                        <p>{dayObject.title}</p>
+                        {returnData}
                     </td>
                 )
             }

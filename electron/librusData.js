@@ -31,7 +31,12 @@ class librusData {
                     currentWeek: null,
                     nextWeek: null
                 },
-                notifications: null
+                notifications: null,
+                luckyNumber: {
+                    when: "",
+                    number: 0,
+                    amILucky: false
+                }
             }
 
             const transformDateToValidString = (date) => {
@@ -339,6 +344,27 @@ class librusData {
             await this.librusData.inbox.listAnnouncements().then(data => dataToSend.notifications = data);
             
             await this.librusData.inbox.listInbox(5).then(async data => dataToSend.messages = data);
+
+            await this.librusData.info.getLuckyNumber().then(data => {
+                const luckyNumber = parseInt(data);
+                const studentNumber = parseInt(dataToSend.accountInfo.student.index);
+
+                const date6pm = new Date(todayDate);
+                date6pm.setHours(18, 0, 0, 0);
+
+                if (studentNumber === luckyNumber) {
+                    if (todayDate.getTime() > date6pm.getTime()) {
+                        dataToSend.luckyNumber.when = "Tomorrow";
+                    }
+                    else {
+                        dataToSend.luckyNumber.when = "Today";
+                    }
+
+                    dataToSend.luckyNumber.amILucky = true;
+                }
+
+                dataToSend.luckyNumber.number = data;
+            });
 
             resolve(dataToSend);
         });

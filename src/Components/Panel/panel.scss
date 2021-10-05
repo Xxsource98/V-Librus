@@ -14,7 +14,7 @@
         .panel-header {
             position: relative;
             left: 15px;
-            width: 50%;
+            width: 65%;
             font-size: 1.4rem;
             font-weight: 400;
         }
@@ -179,7 +179,7 @@
                     border: none;
                     border: 0.1px solid #393e49;
                     margin: 0;
-                    font-size: 1.05rem;
+                    font-size: 1.02rem;
                     word-wrap: break-word;   
                     top: 0;
                     padding: 5px;
@@ -231,5 +231,12 @@
             margin: 0;
             color: #919191;
         }
+    }
+
+    .lucky-number {
+        position: relative;
+        top: -2px;
+        color: #2ecc71;
+        font-size: 1.15rem;
     }
 }

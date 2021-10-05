@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { globalDataContext } from '../../globalContext';
 
@@ -12,10 +12,16 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 const Panel = () => {
     const history = useHistory();
     const [ dataContext, ] = useContext(globalDataContext);
+    const [ luckyNumber, setLuckyNumber ] = useState("");
 
     useEffect(() => {
         if (dataContext.loginData.rememberMe) {
             ipcRenderer.send('save-to-file', dataContext.loginData.user, dataContext.loginData.pass); 
+        }
+
+        let luckyData = dataContext.librusData.luckyNumber;
+        if (dataContext !== undefined && luckyData.amILucky) {
+            setLuckyNumber(` ${luckyData.when} You're Lucky Number! (${luckyData.number})`);
         }
 
         const timer = setTimeout(() => {
@@ -33,7 +39,7 @@ const Panel = () => {
         return (
             <div className="main-panel" >
                 <div className="panel-section">
-                    <p className="panel-header">Welcome, {dataContext.librusData.accountInfo.account.nameSurname}</p>
+                    <p className="panel-header">Welcome, {dataContext.librusData.accountInfo.account.nameSurname} <span className="lucky-number">{luckyNumber}</span></p>
                     <div className="widgets" onWheel={ev => onHorizontalScroll(ev)}>
                         {CreateWidgets(false)}
                     </div>

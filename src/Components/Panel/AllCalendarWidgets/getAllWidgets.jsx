@@ -31,6 +31,8 @@ const CreateWidgets = (
         const curDate = new Date();
         const evDate = new Date(date);
         const difference = calculateDifference(evDate, curDate);
+
+        if (isNaN(difference)) return (<></>);
         
         return (
             <div className={`widget ${smallWidgets ? "small" : ""} ${widgetType}`} key={`${type}:${ID}:${Math.random()}`}>
@@ -57,8 +59,6 @@ const CreateWidgets = (
     }
 
     for (const data of calendar.appealAndShifts) {
-        console.log(data);
-
         elementsData.push({
             date: data.date,
             widget: CreateWidget("appealshifts", data.msgID, data.date, data.title)

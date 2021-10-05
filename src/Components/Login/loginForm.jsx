@@ -21,6 +21,7 @@ const LoginForm = () => {
     const [ rememberMe, setRememberMe ] = useState(false);
     const [ status, setStatus ] = useState("");
     const [ newVersion, setNewVersion ] = useState(false);
+    const [ loggingIn, setLogginInStatus ] = useState(false);
 
     const updateErrorMessage = librusData => {
         if (librusData === undefined) {
@@ -32,6 +33,8 @@ const LoginForm = () => {
         else {
             setStatus("");
         }
+
+        setLogginInStatus(false);
     }
 
     const setContextData = useCallback((librusData, login, pass) => {
@@ -54,11 +57,15 @@ const LoginForm = () => {
     const checkLoginData = async ev => {
         ev.preventDefault();
 
-        setStatus("Logging In...");
-        trackPromise(ipcRenderer.invoke("librus-login", username, password).then(data => {
-            updateErrorMessage(data);
-            setContextData(data, username, password);
-        }));
+        if (!loggingIn) {
+            setLogginInStatus(true);
+
+            setStatus("Logging In...");
+            trackPromise(ipcRenderer.invoke("librus-login", username, password).then(data => {
+                updateErrorMessage(data);
+                setContextData(data, username, password);
+            }));
+        }
     }
 
     const checkIfLoginURL = useCallback(() => {
@@ -66,6 +73,8 @@ const LoginForm = () => {
         const pass = new URLSearchParams(location.search).get("pass");
 
         if (login !== null && pass !== null) {
+            setLogginInStatus(true);
+
             setStatus("Logging In...");
             trackPromise(ipcRenderer.invoke("librus-login", login, pass).then(data => {
                 updateErrorMessage(data);
@@ -102,6 +111,7 @@ const LoginForm = () => {
                 let context = null;
     
                 if (doesExist) {
+                    setLogginInStatus(true);
                     setStatus("Logging In...");
                     await trackPromise(ipcRenderer.invoke("check-for-logged").then(data => {
                         context = data;
