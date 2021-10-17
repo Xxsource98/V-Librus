@@ -17,9 +17,11 @@ const Grades = () => {
         // Update To Second Semester Automatically if it exists
         let grades = dataContext.librusData.grades;
 
-        for (const grade of grades) {
-            if (grade.semester2.normal.length > 0) {
-                setCurrentSemester("second");
+        if (grades !== undefined) {
+            for (const grade of grades) {
+                if (grade.semester2.normal.length > 0) {
+                    setCurrentSemester("second");
+                }
             }
         }
     }, [dataContext]);
@@ -55,6 +57,13 @@ const Grades = () => {
 
     const drawGradesWidgets = (grades) => {
         let returnData = [];
+
+        grades.sort((a, b) => {
+            const aDate = new Date(a.date.substring(0, 10));
+            const bDate = new Date(b.date.substring(0, 10));
+
+            return aDate - bDate;
+        })
 
         for (const grade of grades) {
             if (grade === undefined) continue;

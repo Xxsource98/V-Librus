@@ -68,8 +68,9 @@ const Messages = () => {
                 </tr>
             );
 
+            // Yes, I know I should put it in tr tag, but when I did that it was too buggy and it's works now so lol
             returnData.push(
-                <div className="message-dropdown">
+                <div className="message-dropdown" key={message.id}> 
                     <div>
                         <img className="load" src={LoadingIcon} alt={LoadingIcon} />
                         <p></p>

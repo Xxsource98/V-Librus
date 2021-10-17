@@ -188,11 +188,12 @@ class librusData {
     
                                 if (type === "absence") {
                                     const rangeDays = getRangeInDays(obj.range);
-    
+                                    if (obj.added === undefined) return;
+
                                     if (rangeDays > 0) {
                                         if (bannedTeachers.indexOf(obj.teacher) !== -1) return;
-                                        else bannedTeachers.push(obj.teacher);                                
-    
+                                        else bannedTeachers.push(obj.teacher);       
+                                            
                                         for (let i = 0; i < rangeDays + 1; i++) {
                                             dataToSend.calendar.absences.push({
                                                 msgID: event.id,
@@ -260,7 +261,8 @@ class librusData {
     
                                 if (type === "absence") {
                                     const rangeDays = getRangeInDays(obj.range);
-    
+                                    if (obj.added === undefined) return;
+
                                     if (rangeDays > 0) {
                                         if (bannedTeachers.indexOf(obj.teacher) !== -1) return;
                                         else bannedTeachers.push(obj.teacher);                                

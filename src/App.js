@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
+import HandleRefresh from './Components/handleRefresh';
 import Titlebar from './Components/TitleBar/titleBar';
 import LoginForm from './Components/Login/loginForm';
 import { globalDataContext } from './globalContext';
@@ -25,6 +26,7 @@ const App = () => {
     <Router>
       <Switch>
         <globalDataContext.Provider value={[dataContext, setDataContext]}>
+          <HandleRefresh />
           <Titlebar />
           <Route exact path="/" component={LoginForm} />
           <Route exact path="/panel" component={Panel} />

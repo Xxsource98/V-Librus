@@ -1,11 +1,16 @@
 import React, { useContext } from 'react';
 import { globalDataContext } from '../../../globalContext';
 
-const CreateWidgets = (
+const CreateWidgets = ({
     smallWidgets = false
-) => {
+}) => {
     const [ dataContext, ] = useContext(globalDataContext);
 
+    const curDate = new Date();
+    const calendar = dataContext.librusData.calendar;
+    let elementsData = [];
+    let returnData = [];
+    
     const getCountDaysString = difference => {
         switch (difference) { 
             case 0: return "Today";
@@ -33,9 +38,9 @@ const CreateWidgets = (
         const difference = calculateDifference(evDate, curDate);
 
         if (isNaN(difference)) return (<></>);
-        
+
         return (
-            <div className={`widget ${smallWidgets ? "small" : ""} ${widgetType}`} key={`${type}:${ID}:${Math.random()}`}>
+            <div className={`widget ${smallWidgets ? "small" : ""} ${widgetType}`} key={`${date}:${type}:${ID}`}>
                 <div className="widget-header">
                     <p className="count-days">{getCountDaysString(difference)}</p>
                     <p className="orig-date">({date})</p>
@@ -46,14 +51,11 @@ const CreateWidgets = (
         )
     }
 
-    const curDate = new Date();
-    const calendar = dataContext.librusData.calendar;
-    let elementsData = [];
-    let returnData = [];
-
     for (const data of calendar.absences) {
         elementsData.push({
             date: data.date,
+            teacher: data.teacher,
+            type: "absence",
             widget: CreateWidget("absence", data.msgID, data.date, `Absence: ${data.teacher}`)
         });
     }
@@ -61,6 +63,8 @@ const CreateWidgets = (
     for (const data of calendar.appealAndShifts) {
         elementsData.push({
             date: data.date,
+            teacher: '',
+            type: "appeal",
             widget: CreateWidget("appealshifts", data.msgID, data.date, data.title)
         });
     }
@@ -68,6 +72,8 @@ const CreateWidgets = (
     for (const data of calendar.tests) {
         elementsData.push({
             date: data.date,
+            teacher: data.teacher,
+            type: "test",
             widget: CreateWidget("test", data.msgID, data.date, `${data.lesson} - ${data.type}`, data.description)
         });
     }
@@ -76,8 +82,8 @@ const CreateWidgets = (
         const obj1Date = new Date(obj1.date);
         const obj2Date = new Date(obj2.date);
 
-        if (obj1Date.getTime() < obj2Date.getTime()) return -1;
-        if (obj1Date.getTime() > obj2Date.getTime()) return 1;
+        if (obj1Date < obj2Date) return -1;
+        if (obj1Date > obj2Date) return 1;
 
         return 0;
     })
@@ -90,7 +96,7 @@ const CreateWidgets = (
         returnData.push(element.widget);
     }
     
-    return returnData;
+    return (<>{returnData}</>);
 }
 
-export { CreateWidgets };
+export default CreateWidgets;

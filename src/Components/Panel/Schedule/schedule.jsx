@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { globalDataContext } from '../../../globalContext';
 
 import PanelShortcuts from '../panelShortcuts';
@@ -13,6 +13,14 @@ const Schedule = () => {
     const [ currentWeek, setCurrentWeek ] = useState("current");
     
     const [ dataContext, ] = useContext(globalDataContext);
+
+    useEffect(() => {
+        const curDate = new Date();
+
+        if (curDate.getDay() === 0 || (curDate.getDay() > 4)) {
+            setCurrentWeek('next');
+        }
+    }, []);
 
     const RenderScheduleTable = ({
         week = ""

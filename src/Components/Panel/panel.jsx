@@ -3,7 +3,7 @@ import { Link, Redirect, useHistory } from 'react-router-dom';
 import { globalDataContext } from '../../globalContext';
 
 import PanelShortcuts from './panelShortcuts';
-import { CreateWidgets } from './AllCalendarWidgets/getAllWidgets';
+import CreateWidgets from './AllCalendarWidgets/getAllWidgets';
 
 import './panel.scss';
 
@@ -20,14 +20,11 @@ const Panel = () => {
         }
 
         let luckyData = dataContext.librusData.luckyNumber;
-        if (dataContext !== undefined && luckyData.amILucky) {
-            setLuckyNumber(` ${luckyData.when} You're Lucky Number! (${luckyData.number})`);
+        if (dataContext !== undefined && luckyData !== undefined) {
+            if (luckyData.amILucky) {
+                setLuckyNumber(`${luckyData.when} You're Lucky Number! (${luckyData.number})`);
+            }
         }
-
-        const timer = setTimeout(() => {
-            history.go('/');
-        }, 1800000); // Refresh in 30 minutes for "refresh" data
-        return () => clearTimeout(timer);
 
     }, [dataContext, history]);
 
@@ -41,7 +38,7 @@ const Panel = () => {
                 <div className="panel-section">
                     <p className="panel-header">Welcome, {dataContext.librusData.accountInfo.account.nameSurname} <span className="lucky-number">{luckyNumber}</span></p>
                     <div className="widgets" onWheel={ev => onHorizontalScroll(ev)}>
-                        {CreateWidgets(false)}
+                        <CreateWidgets smallWidgets={false} />
                     </div>
                     <div className="all-events-link-container">
                         <Link className="all-events-link" to='/panel/allCalendarWidgets'>All Coming Events</Link>

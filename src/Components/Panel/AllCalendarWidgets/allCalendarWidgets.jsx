@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { MainPanel, NavigatePanel } from '../mainPanel';
-import { CreateWidgets } from './getAllWidgets';
+import CreateWidgets from './getAllWidgets';
 
 import '../panel.scss';
 import './widgets.scss';
@@ -12,7 +12,7 @@ const AllCalendarWidgets = () => {
             <p className="panel-header">All Coming Events</p>
             <NavigatePanel />
             <div className="widgets all">
-                {CreateWidgets(true)}
+                <CreateWidgets smallWidgets={true} />
             </div>
         </div>
     );
