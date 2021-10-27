@@ -62,11 +62,11 @@
                             right: 6px;
                             text-align: right;
                             font-size: 0.8rem;
-                            color: rgb(172, 172, 172);
+                            color: #acacac;
                         }
 
                         span[data-disabled="true"] {
-                            color: rgb(138, 138, 138)
+                            color: #8a8a8a
                         }
 
                         &:hover {
@@ -81,6 +81,21 @@
                     ul {
                         display: block;
                     }
+                }
+            }
+
+            .separate-line {
+                position: relative;
+                height: 5px;
+
+                span {
+                    position: absolute;
+                    top: 1.5px;
+                    width: 90%;
+                    left: 7px;
+                    content: '';
+                    height: 1px;
+                    background: #8a8a8a;
                 }
             }
         }

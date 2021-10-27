@@ -121,6 +121,8 @@ const Grades = () => {
             if (!grade.inAverage || grade.grade === "+" || grade.grade === "-" || grade.grade === "np" || grade.grade === "nb" || grade.grade === "0") continue;
             let currentGrade = parseInt(grade.grade);
             let currentMultiplier = parseInt(grade.multiplier);
+            if (isNaN(currentGrade)) continue;
+            if (isNaN(currentMultiplier)) continue;
 
             if (grade.grade.indexOf('-') !== -1) {
                 currentGrade -= 0.25;

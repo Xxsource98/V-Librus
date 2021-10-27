@@ -50,6 +50,9 @@
             left: 10px;
             top: 15px;
             width: 90%;
+            height: auto;
+            max-height: 125px;
+            overflow-y: auto;
         }
 
         .description {
@@ -58,6 +61,26 @@
             bottom: 10px;
             left: 10px;
             font-size: 0.9rem;
+            right: 10px;
+            height: auto;
+            max-height: 80px;
+            overflow-y: auto;
+        }
+
+        .description, .type {
+            &::-webkit-scrollbar {
+                width: 10px;
+                background: #38383869;
+            }
+             
+            &::-webkit-scrollbar-thumb {
+                background-color: #c4ebf788;
+                border-radius: 0px;
+            
+                &:hover {
+                    background: #c4ebf77e;
+                }
+            }
         }
     }
 
@@ -67,11 +90,12 @@
         max-width: 250px * 0.85;
 
         .type {
-            font-size: 1rem;
+            font-size: 0.87rem;
+            max-height: 85px;
         }
 
         .description {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
     }
 

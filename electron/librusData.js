@@ -81,6 +81,19 @@ class librusData {
                 return curDate.toISOString().slice(0, 10);
             }
 
+            const getWeekDays = weekDate => {
+                let dates = [];
+
+                const date = new Date(weekDate);
+
+                for (let i = 0; i < 5; i++) {
+                    date.setDate(i === 0 ? date.getDate() : date.getDate() + 1);
+                    dates.push(`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`);
+                }
+
+                return dates;
+            }
+
             const currentWeek = getMondayFridayDate(todayDate);
             const lastWeek = getMondayFridayDate(previousDate);
             const nextWeek = getMondayFridayDate(nextDate);
@@ -333,14 +346,17 @@ class librusData {
             await this.librusData.calendar.getTimetable(currentWeek.monday, currentWeek.friday).then(calendarData => {
                 dataToSend.schedule.currentWeek = calendarData;
                 dataToSend.schedule.currentWeek.currentWeekString = `${currentWeek.monday} - ${currentWeek.friday}`;
+                dataToSend.schedule.currentWeek.currentWeekDays = getWeekDays(currentWeek.monday);
             });
             await this.librusData.calendar.getTimetable(lastWeek.monday, lastWeek.friday).then(calendarData => {
                 dataToSend.schedule.previousWeek = calendarData;
                 dataToSend.schedule.previousWeek.currentWeekString = `${lastWeek.monday} - ${lastWeek.friday}`;
+                dataToSend.schedule.previousWeek.currentWeekDays = getWeekDays(lastWeek.monday);
             });
             await this.librusData.calendar.getTimetable(nextWeek.monday, nextWeek.friday).then(calendarData => {
                 dataToSend.schedule.nextWeek = calendarData;
                 dataToSend.schedule.nextWeek.currentWeekString = `${nextWeek.monday} - ${nextWeek.friday}`;
+                dataToSend.schedule.nextWeek.currentWeekDays = getWeekDays(nextWeek.monday);
             });
 
             await this.librusData.inbox.listAnnouncements().then(data => dataToSend.notifications = data);

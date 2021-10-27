@@ -11,7 +11,7 @@ import '../panel.scss';
 
 const Schedule = () => {
     const [ currentWeek, setCurrentWeek ] = useState("current");
-    
+
     const [ dataContext, ] = useContext(globalDataContext);
 
     useEffect(() => {
@@ -76,7 +76,7 @@ const Schedule = () => {
                             <div>
                                 <span>{dayObject.insideFields.firstField.flag}</span>
                             </div>
-                            <p>{dayObject.insideFields.firstField.title}</p>
+                            <p><strike>{dayObject.insideFields.firstField.title}</strike></p>
                             <div className="second-flag">
                                 <span>{dayObject.insideFields.secondField.flag}</span>
                             </div>
@@ -90,19 +90,24 @@ const Schedule = () => {
                             <div>
                                 <span>{dayObject.flag}</span>
                             </div>
-                            <p>{dayObject.title}</p>
+                            <p>{dayObject.flag !== "" ? <strike>{dayObject.title}</strike> : dayObject.title}</p>
                         </>
                     )
                 }
                 
                 return (
-                    <td className={` ${today === dayIndex ? "selected" : "" } ${dayObject.flag !== "" ? "flag" : ""}`}>
+                    <td className={`${today === dayIndex ? "selected" : "" } ${dayObject.flag !== "" ? "flag" : ""}`}>
                         {returnData}
                     </td>
                 )
             }
 
-            for (let i = 0; i < 14; i++) {
+            // Detect Lesson 0 at 7 am
+            const startIndex = lessons.hours.find(obj => {
+                return obj.indexOf('07') !== -1;
+            }) === undefined ? 1 : 0;
+
+            for (let i = startIndex; i < lessons.hours.length; i++) {
                 const mondayObject = getTableDate("Monday", i);
                 const tuesdayObject = getTableDate("Tuesday", i);
                 const wednesdayObject = getTableDate("Wednesday", i);
@@ -127,17 +132,26 @@ const Schedule = () => {
 
         const tableData = drawTable().map(data => { return data });
 
+        const TitleCell = ({ day, dateString }) => {
+            return (
+                <th height="40" className={today === 1 ? "table-title selected" : "table-title"}>
+                    <p>{day}</p>
+                    <p className='date'>{dateString}</p>
+                </th>
+            )
+        }
+
         return (
             <table>
                 <thead>
                     <tr className="middle-align">
                         <th width="3%"></th>
                         <th width="10%">Hour</th>
-                        <th height="40" className={today === 1 ? "selected" : ""}>Monday</th>
-                        <th className={today === 2 ? "selected" : ""}>Tuesday</th>
-                        <th className={today === 3 ? "selected" : ""}>Wednesday</th>
-                        <th className={today === 4 ? "selected" : ""}>Thursday</th>
-                        <th className={today === 5 ? "selected" : ""}>Friday</th>
+                        <TitleCell day="Monday"     dateString={lessons.currentWeekDays[0]} />
+                        <TitleCell day="Tuesday"    dateString={lessons.currentWeekDays[1]} />
+                        <TitleCell day="Wednesday"  dateString={lessons.currentWeekDays[2]} />
+                        <TitleCell day="Thursday"   dateString={lessons.currentWeekDays[3]} />
+                        <TitleCell day="Friday"     dateString={lessons.currentWeekDays[4]} />
                     </tr>
                 </thead>
                 <tbody>

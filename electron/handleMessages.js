@@ -9,7 +9,6 @@ const HandleMessages = (
     mainWindow,
     app,
     librusData,
-
 ) => {
     const loginDataLocation = isDev ? path.join(__dirname, "../loginData.json") : path.join(app.getPath("userData"), "./loginData.json");
 
@@ -55,6 +54,10 @@ const HandleMessages = (
         
         librusData.refreshData();
         mainWindow.reload();
+    });
+
+    ipcMain.on('dev-mode', ev => {
+        mainWindow.webContents.toggleDevTools();
     });
 
     ipcMain.handle('librus-login', async (ev, login, pass) => {
@@ -104,11 +107,6 @@ const HandleMessages = (
         let returnObject = "Invalid Data";
 
         if (fs.existsSync(loginDataLocation)) {
-            new Notification({
-                title: "V-Librus",
-                body: "Logging In..."
-            }).show();
-            
             let returnData = {
                 librusData: {},
                 loginData: {}

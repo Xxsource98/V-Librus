@@ -78,6 +78,8 @@ const Titlebar = () => {
             }
         }
 
+        const openDevTools = ev => ipcRenderer.send('dev-mode');
+
         return (
             <ul>
                 <li>
@@ -106,6 +108,12 @@ const Titlebar = () => {
                         <li>
                             <span data-disabled="true">App Version:</span>
                             <span className="right" data-disabled="true">{appVersion}</span>
+                        </li>
+                        <div className='separate-line'>
+                            <span></span>
+                        </div>
+                        <li onClick={openDevTools}>
+                            <span>Toggle Dev Tools</span>
                         </li>
                     </ul>
                 </li>

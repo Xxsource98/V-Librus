@@ -19,7 +19,6 @@ app.on('ready', () => {
         minWidth: 800,
         minHeight: 760,
         webPreferences: {
-            devTools: isDev, // Enable dev tools in dev mode
             nodeIntegration: true,
             contextIsolation: false
         }
@@ -45,6 +44,9 @@ const registerShortcuts = () => {
 
     const zoomOutBind = process.platform === "darwin" ? 'Cmd+-' : 'Ctrl+-';
     const zoomInBind = process.platform === "darwin" ? 'Cmd+=' : 'Ctrl+=';
+    const devToolsBind = process.platform === "darwin" ? 'Cmd+Opt+I' : 'Ctrl+Shift+I';
+
+    globalShortcut.register(devToolsBind, () => { return false });
 
     globalShortcut.register(zoomOutBind, () => {
         const zoomFactor = mainWindow.webContents.zoomFactor;

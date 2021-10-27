@@ -71,6 +71,17 @@
     vertical-align: middle;
 }
 
+.table-title {
+    p {
+        margin: 0;
+        padding: 5px;
+    }
+
+    p.date {
+        color: #a8a8a8;
+    }
+}
+
 .change-date {
     position: absolute;
     display: flex;

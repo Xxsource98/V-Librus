@@ -29,7 +29,9 @@ const Panel = () => {
     }, [dataContext, history]);
 
     const onHorizontalScroll = target => {
-        target.currentTarget.scrollLeft += (target.deltaY + target.deltaX) * 0.6;
+        if (target.target.scrollHeight <= target.target.clientHeight) {
+            target.currentTarget.scrollLeft += (target.deltaY + target.deltaX) * 0.6;
+        }
     }
 
     if (dataContext.loginData.isLogged) {
