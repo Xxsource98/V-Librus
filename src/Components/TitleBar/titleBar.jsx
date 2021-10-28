@@ -9,7 +9,7 @@ import { globalDataContext } from '../../globalContext';
 import { useHistory } from 'react-router-dom';
 
 const ipcRenderer = window.require("electron").ipcRenderer;
-const appVersion = "1.0.0";
+const appVersion = "1.0.3"
 const isMac = process.platform === "darwin";
 
 const Titlebar = () => {

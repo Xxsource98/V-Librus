@@ -56,9 +56,11 @@ const Grades = () => {
     }
 
     const drawGradesWidgets = (grades) => {
+        if (!grades) return;
         let returnData = [];
 
         grades.sort((a, b) => {
+            if (!a || !b) return;
             const aDate = new Date(a.date.substring(0, 10));
             const bDate = new Date(b.date.substring(0, 10));
 
