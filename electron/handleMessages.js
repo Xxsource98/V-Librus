@@ -92,16 +92,15 @@ const HandleMessages = (
         }
     });
 
-    async function readFile(path) {
-        return new Promise((resolve, reject) => {
-          fs.readFile(path, 'utf8', function (err, data) {
-            if (err) {
-              reject(err);
-            }
-            resolve(data);
-          });
+    const readFile = async (path) => {
+        return new Promise((res, rej) => {
+            fs.readFile(path, 'utf8', (err, data) => {
+                if (err) rej(err);
+                
+                res(data);
+            });
         });
-      }
+    }
 
     ipcMain.handle('check-for-logged', async ev => {
         let returnObject = "Invalid Data";

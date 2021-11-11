@@ -20,7 +20,8 @@ app.on('ready', () => {
         minHeight: 760,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false
+            contextIsolation: false,
+            nativeWindowOpen: true
         }
     });
 

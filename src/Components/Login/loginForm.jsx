@@ -4,7 +4,6 @@ import { globalDataContext } from '../../globalContext';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import appVersion from '../../.version';
-
 import './loginForm.scss';
 import LoadingIcon from '../../Images/img/Loading.png';
 

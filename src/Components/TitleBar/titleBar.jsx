@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "./titleBar.scss";
 
 import close from '../..//Images/svg/CloseSVG.svg'
@@ -8,13 +8,22 @@ import minimize from '../../Images/svg/MinimalizeSVG.svg'
 import { globalDataContext } from '../../globalContext';
 import { useHistory } from 'react-router-dom';
 
+import appVersionFile from '../../.version';
+
 const ipcRenderer = window.require("electron").ipcRenderer;
-const appVersion = "1.0.0";
 const isMac = process.platform === "darwin";
 
 const Titlebar = () => {
     const [ dataContext, setDataContext ] = useContext(globalDataContext);
+    const [ appVersion, setAppVersion ] = useState("");
     const history = useHistory();
+
+    useEffect(() => {
+        (async () => {
+            const version = await fetch(appVersionFile).then(r => r.text());
+            setAppVersion(version);
+        })()
+    }, []);
 
     const RenderWindowItems = () => {
         const RenderAccountSection = () => {

@@ -55,55 +55,75 @@ const Grades = () => {
         }
     }
 
-    const drawGradesWidgets = (grades) => {
+    const drawGradesWidgets = (grades, subject) => {
         let returnData = [];
+        let gradeIndex = 0;
 
-        grades.sort((a, b) => {
-            const aDate = new Date(a.date.substring(0, 10));
-            const bDate = new Date(b.date.substring(0, 10));
+        if (grades[0] !== undefined && grades[0].date !== undefined) {
+            grades.sort((a, b) => {
+                const aDate = new Date(a.date.substring(0, 10));
+                const bDate = new Date(b.date.substring(0, 10));
 
-            return aDate - bDate;
-        })
+                return aDate - bDate;
+            });
+        }
 
         for (const grade of grades) {
             if (grade === undefined) continue;
-            returnData.push(
-                <div className="grade-widget" style={{
-                    backgroundColor: setGradeBackground(grade.multiplier)
-                }} onClick={click => switchDescriptionMenu(click.target)} key={`${grade.grade}:${grade.lesson}:${Math.random()}`}>
-                    <p>{grade.grade}</p>
-                    <div className="grade-widget-desc">
-                        <div className="grade-widget-desc-header">
-                            <h3>{grade.lesson}</h3>
-                            <span>{grade.category}</span>
-                        </div>
-                        <div className="grade-widget-desc-row">
-                            <span>Comment: </span>
-                            <span>{grade.comment === "" ? "-" : grade.comment}</span>
-                        </div>
-                        <div className="grade-widget-desc-row">
-                            <span>Grade: </span>
-                            <span>{grade.grade}</span>
-                        </div>
-                        <div className="grade-widget-desc-row">
-                            <span>Multiplier: </span>
-                            <span>{grade.multiplier}</span>
-                        </div>
-                        <div className="grade-widget-desc-row">
-                            <span>In Average: </span>
-                            <span>{grade.inAverage === true ? "Yes" : "No"}</span>
-                        </div>
-                        <div className="grade-widget-desc-row">
-                            <span>Teacher: </span>
-                            <span>{grade.teacher}</span>
-                        </div>
-                        <div className="grade-widget-desc-row">
-                            <span>Date: </span>
-                            <span>{grade.date}</span>
+            let pointSystem = grade.grade === undefined; // Point System is a grades without any inside data
+
+            if (pointSystem) {
+                returnData.push(
+                    <div className="grade-widget" style={{
+                        backgroundColor: '#6c5ce7'
+                    }} key={`${subject}:${gradeIndex}`}>
+                        <p>{grade}</p>
+                    </div>
+                );
+
+                gradeIndex++;
+            }
+            else {                
+                returnData.push(
+                    <div className="grade-widget" style={{
+                        backgroundColor: setGradeBackground(grade.multiplier)
+                    }} onClick={click => switchDescriptionMenu(click.target)} key={`${subject}:${gradeIndex}`}>
+                        <p>{grade.grade}</p>
+                        <div className="grade-widget-desc">
+                            <div className="grade-widget-desc-header">
+                                <h3>{grade.lesson}</h3>
+                                <span>{grade.category}</span>
+                            </div>
+                            <div className="grade-widget-desc-row">
+                                <span>Comment: </span>
+                                <span>{grade.comment === "" ? "-" : grade.comment}</span>
+                            </div>
+                            <div className="grade-widget-desc-row">
+                                <span>Grade: </span>
+                                <span>{grade.grade}</span>
+                            </div>
+                            <div className="grade-widget-desc-row">
+                                <span>Multiplier: </span>
+                                <span>{grade.multiplier}</span>
+                            </div>
+                            <div className="grade-widget-desc-row">
+                                <span>In Average: </span>
+                                <span>{grade.inAverage === true ? "Yes" : "No"}</span>
+                            </div>
+                            <div className="grade-widget-desc-row">
+                                <span>Teacher: </span>
+                                <span>{grade.teacher}</span>
+                            </div>
+                            <div className="grade-widget-desc-row">
+                                <span>Date: </span>
+                                <span>{grade.date}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            );
+                );
+
+                gradeIndex++;
+            }
         }
 
         return (
@@ -116,23 +136,32 @@ const Grades = () => {
     const calculateAverageGrade = grades => {
         let gradesSum = 0;
         let gradesSize = 0;
+        let pointSystem = false;
 
         for (const grade of grades) {
-            if (!grade.inAverage || grade.grade === "+" || grade.grade === "-" || grade.grade === "np" || grade.grade === "nb" || grade.grade === "0") continue;
-            let currentGrade = parseInt(grade.grade);
-            let currentMultiplier = parseInt(grade.multiplier);
-            if (isNaN(currentGrade)) continue;
-            if (isNaN(currentMultiplier)) continue;
+            pointSystem = grade.grade === undefined;
 
-            if (grade.grade.indexOf('-') !== -1) {
-                currentGrade -= 0.25;
+            if (pointSystem) {
+                gradesSum += parseInt(grade);
+                gradesSize++;
             }
-            if (grade.grade.indexOf('+') !== -1) {
-                currentGrade += 0.5;
-            }
+            else {
+                if (!grade.inAverage || grade.grade === "+" || grade.grade === "-" || grade.grade === "np" || grade.grade === "nb" || grade.grade === "0") continue;
+                let currentGrade = parseInt(grade.grade);
+                let currentMultiplier = parseInt(grade.multiplier);
+                if (isNaN(currentGrade)) continue;
+                if (isNaN(currentMultiplier)) continue;
 
-            gradesSum += currentGrade * currentMultiplier;
-            gradesSize += currentMultiplier;
+                if (grade.grade.indexOf('-') !== -1) {
+                    currentGrade -= 0.25;
+                }
+                if (grade.grade.indexOf('+') !== -1) {
+                    currentGrade += 0.5;
+                }
+
+                gradesSum += currentGrade * currentMultiplier;
+                gradesSize += currentMultiplier;
+            }
         }
 
         const result = (gradesSum / gradesSize).toFixed(2);
@@ -150,7 +179,7 @@ const Grades = () => {
             returnData.push(
                 <tr key={`${grade.subject}`}>
                     <td>{grade.subject}</td>
-                    <td>{drawGradesWidgets(gradesList.normal)}</td>
+                    <td>{drawGradesWidgets(gradesList.normal, grade.subject)}</td>
                     <td style={{textAlign: 'center'}}>{calculateAverageGrade(gradesList.normal)}</td>
                     <td style={{textAlign: 'center', fontWeight: '500'}}>{gradesList.final === "" ? "-" : gradesList.final}</td>
                 </tr>

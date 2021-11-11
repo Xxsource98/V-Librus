@@ -88,7 +88,7 @@ class librusData {
 
                 for (let i = 0; i < 5; i++) {
                     date.setDate(i === 0 ? date.getDate() : date.getDate() + 1);
-                    dates.push(`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`);
+                    dates.push(transformDateToValidString(date));
                 }
 
                 return dates;

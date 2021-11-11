@@ -17,7 +17,7 @@ const Schedule = () => {
     useEffect(() => {
         const curDate = new Date();
 
-        if (curDate.getDay() === 0 || (curDate.getDay() > 4)) {
+        if (curDate.getDay() === 0 || (curDate.getDay() > 5)) {
             setCurrentWeek('next');
         }
     }, []);
@@ -61,10 +61,25 @@ const Schedule = () => {
 
         const drawTable = () => {
             let array = [];
+            // todo selected but date
+
+            const IsItToday = (dateToCheck) => {
+                const today = new Date();
+                const check = new Date(dateToCheck);
+
+                if (today.getDate() === check.getDate() &&
+                    today.getMonth() === check.getMonth() &&
+                    today.getFullYear() === check.getFullYear()) 
+                {
+                    return true;
+                }
+
+                return false;
+            }
 
             const CreateTdElement = ({
-                dayIndex = 0, 
-                dayObject = null
+                dayObject = null,
+                date = ""
             }) => {
                 let returnData = null;
                 
@@ -96,7 +111,7 @@ const Schedule = () => {
                 }
                 
                 return (
-                    <td className={`${today === dayIndex ? "selected" : "" } ${dayObject.flag !== "" ? "flag" : ""}`}>
+                    <td className={`${IsItToday(date) ? "selected" : "" } ${dayObject.flag !== "" ? "flag" : ""}`}>
                         {returnData}
                     </td>
                 )
@@ -118,11 +133,11 @@ const Schedule = () => {
                     <tr style={{verticalAlign: 'top'}} key={`${mondayObject.title}:${mondayObject.flag}:${Math.random()}`}>
                         <td className="middle-align">{i}</td>
                         <td className="middle-align">{lessons.hours[i]}</td>
-                        <CreateTdElement dayIndex={1} dayObject={mondayObject} />
-                        <CreateTdElement dayIndex={2} dayObject={tuesdayObject} />
-                        <CreateTdElement dayIndex={3} dayObject={wednesdayObject} />
-                        <CreateTdElement dayIndex={4} dayObject={thursdayObject} />
-                        <CreateTdElement dayIndex={5} dayObject={fridayObject} />
+                        <CreateTdElement date={lessons.currentWeekDays[0]} dayObject={mondayObject} />
+                        <CreateTdElement date={lessons.currentWeekDays[1]} dayObject={tuesdayObject} />
+                        <CreateTdElement date={lessons.currentWeekDays[2]} dayObject={wednesdayObject} />
+                        <CreateTdElement date={lessons.currentWeekDays[3]} dayObject={thursdayObject} />
+                        <CreateTdElement date={lessons.currentWeekDays[4]} dayObject={fridayObject} />
                     </tr>
                 ));
             }
