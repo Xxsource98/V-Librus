@@ -26,7 +26,7 @@ const Grades = () => {
         }
     }, [dataContext]);
 
-    const setGradeBackground = weightString => { // Set Grade Background depending on grade's weight
+    /*const setGradeBackground = weightString => { // Set Grade Background depending on grade's weight
         const weight = parseInt(weightString);
 
         switch (weight) {
@@ -37,6 +37,40 @@ const Grades = () => {
                 return "#f0932b";
 
             default: return "#686de0";
+        } 
+    }*/
+
+    const setGradeBackground = (gradeString, isDescBackground) => { // Set Grade Background depending on grade's value
+        const parsedGrade = parseInt(gradeString);
+        const grade = isNaN(parsedGrade) ? gradeString : parsedGrade;
+        const opacity = isDescBackground ? 'b7' : ''; // as hex
+
+        switch (grade) {
+            case 6:
+                return `#44bd32${opacity}`;
+
+            case 5:
+                return `#e15f41${opacity}`;
+
+            case 4:
+                return `#2980b9${opacity}`; // 2980b9
+
+            case 3:
+                return `#16a085${opacity}`;
+
+            case 2:
+                return `#8e44ad${opacity}`;
+
+            case 1:
+                return `#e74c3c${opacity}`;
+
+            case '-':
+                return `#eb3b5a${opacity}`;
+
+            case '+':
+                return `#2ecc71${opacity}`;
+
+            default: return `#686de0${opacity}`;
         } 
     }
 
@@ -86,10 +120,12 @@ const Grades = () => {
             else {                
                 returnData.push(
                     <div className="grade-widget" style={{
-                        backgroundColor: setGradeBackground(grade.multiplier)
+                        backgroundColor: setGradeBackground(grade.grade, false)
                     }} onClick={click => switchDescriptionMenu(click.target)} key={`${subject}:${gradeIndex}`}>
                         <p>{grade.grade}</p>
-                        <div className="grade-widget-desc">
+                        <div className="grade-widget-desc" style={{
+                            backgroundColor: setGradeBackground(grade.grade, true)
+                        }}>
                             <div className="grade-widget-desc-header">
                                 <h3>{grade.lesson}</h3>
                                 <span>{grade.category}</span>
@@ -175,12 +211,13 @@ const Grades = () => {
 
         for (const grade of grades) {
             const gradesList = currentSemester === "second" ? grade.semester2 : grade.semester1;
+            const average = calculateAverageGrade(gradesList.normal);
 
             returnData.push(
                 <tr key={`${grade.subject}`}>
                     <td>{grade.subject}</td>
                     <td>{drawGradesWidgets(gradesList.normal, grade.subject)}</td>
-                    <td style={{textAlign: 'center'}}>{calculateAverageGrade(gradesList.normal)}</td>
+                    <td style={{textAlign: 'center', color: average < 1.75 ? '#e74c3c' : ''}}>{calculateAverageGrade(gradesList.normal)}</td>
                     <td style={{textAlign: 'center', fontWeight: '500'}}>{gradesList.final === "" ? "-" : gradesList.final}</td>
                 </tr>
             )

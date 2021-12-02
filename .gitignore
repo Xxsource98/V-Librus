@@ -73,6 +73,9 @@ typings/
 # FuseBox cache
 .fusebox/
 
+# VS Code settings
+.vscode
+
 # Build
 build/
 dist/

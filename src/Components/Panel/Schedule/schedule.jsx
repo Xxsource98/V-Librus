@@ -82,7 +82,7 @@ const Schedule = () => {
                 date = ""
             }) => {
                 let returnData = null;
-                
+
                 const hasTwoFields = dayObject.insideFields === undefined ? false : dayObject.insideFields.secondField !== null;
 
                 if (hasTwoFields) {
@@ -100,14 +100,26 @@ const Schedule = () => {
                     )
                 }
                 else {
-                    returnData = (
-                        <>
-                            <div>
-                                <span>{dayObject.flag}</span>
-                            </div>
-                            <p>{dayObject.flag !== "" ? <strike>{dayObject.title}</strike> : dayObject.title}</p>
-                        </>
-                    )
+                    if (dayObject.flag === 'odwołane' || dayObject.flag === "przesunięcie") {
+                        returnData = (
+                            <>
+                                <div>
+                                    <span>{dayObject.flag}</span>
+                                </div>
+                                <p>{dayObject.flag !== "" ? <strike>{dayObject.title}</strike> : dayObject.title}</p>
+                            </>
+                        )
+                    }
+                    else {
+                        returnData = (
+                            <>
+                                <div>
+                                    <span>{dayObject.flag}</span>
+                                </div>
+                                <p>{dayObject.title}</p>
+                            </>
+                        )
+                    }
                 }
                 
                 return (
@@ -117,12 +129,14 @@ const Schedule = () => {
                 )
             }
 
-            // Detect Lesson 0 at 7 am
-            const startIndex = lessons.hours.find(obj => {
-                return obj.indexOf('07') !== -1;
-            }) === undefined ? 1 : 0;
+            let increaseIndexValue = 0;
+            for (let i = 0; i < lessons.hours.length; i++) {
+                // Detect Lesson 0 at 7 am
+                if (i === 0) {
+                    const foundLessonZero = lessons.hours[i].indexOf('07') !== -1;
 
-            for (let i = startIndex; i < lessons.hours.length; i++) {
+                    if (!foundLessonZero) increaseIndexValue = 1;
+                }
                 const mondayObject = getTableDate("Monday", i);
                 const tuesdayObject = getTableDate("Tuesday", i);
                 const wednesdayObject = getTableDate("Wednesday", i);
@@ -131,7 +145,7 @@ const Schedule = () => {
 
                 array.push((
                     <tr style={{verticalAlign: 'top'}} key={`${mondayObject.title}:${mondayObject.flag}:${Math.random()}`}>
-                        <td className="middle-align">{i}</td>
+                        <td className="middle-align">{i + increaseIndexValue}</td>
                         <td className="middle-align">{lessons.hours[i]}</td>
                         <CreateTdElement date={lessons.currentWeekDays[0]} dayObject={mondayObject} />
                         <CreateTdElement date={lessons.currentWeekDays[1]} dayObject={tuesdayObject} />
