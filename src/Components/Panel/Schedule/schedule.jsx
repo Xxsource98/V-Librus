@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { globalDataContext } from '../../../globalContext';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
+import { GlobalDataContext, ShortcutsPanelContext } from '../../../globalContext';
 
-import PanelShortcuts from '../panelShortcuts';
 import { MainPanel, NavigatePanel } from '../mainPanel';
 
 import Arrow from '../../../Images/img/Arrow.png';
@@ -12,15 +11,24 @@ import '../panel.scss';
 const Schedule = () => {
     const [ currentWeek, setCurrentWeek ] = useState("current");
 
-    const [ dataContext, ] = useContext(globalDataContext);
+    const [ dataContext, ] = useContext(GlobalDataContext);
+    const [ currentPanel, setCurrentPanel ] = useContext(ShortcutsPanelContext);
+
+    const CheckPanel = useCallback((panel) => {
+        if (currentPanel !== panel) {
+            setCurrentPanel(panel);
+        }
+    }, [currentPanel, setCurrentPanel]);
 
     useEffect(() => {
+        CheckPanel('Schedule');
+
         const curDate = new Date();
 
         if (curDate.getDay() === 0 || (curDate.getDay() > 5)) {
             setCurrentWeek('next');
         }
-    }, []);
+    }, [CheckPanel]);
 
     const RenderScheduleTable = ({
         week = ""
@@ -215,17 +223,13 @@ const Schedule = () => {
 
     const componentToDraw = (
         <div>
-            <div className="panel-section">
+            <div className="panel-section panel-padding panel-padding">
                 <p className="panel-header">Schedule</p>
                 <NavigatePanel />
                 <DrawChangeDateSection week={currentWeek}/>
                 <div className="schedule">
                     <RenderScheduleTable week={currentWeek}/>
                 </div>
-            </div>
-            <div className="panel-section">
-                <p className="panel-header">Shortcuts</p>
-                <PanelShortcuts currentPanel="Schedule" />
             </div>
         </div>
     )

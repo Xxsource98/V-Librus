@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { GlobalDataContext } from '../../../globalContext';
 
 const CreateWidgets = ({
-    type = '',
     smallWidgets = false
 }) => {
     const [ dataContext, ] = useContext(GlobalDataContext);
@@ -52,37 +51,31 @@ const CreateWidgets = ({
         )
     }
 
-    if (type === '' || type === 'absence') {
-        for (const data of calendar.absences) {
-            elementsData.push({
-                date: data.date,
-                teacher: data.teacher,
-                type: "absence",
-                widget: CreateWidget("absence", data.msgID, data.date, `Absence: ${data.teacher}`)
-            });
-        }
+    for (const data of calendar.absences) {
+        elementsData.push({
+            date: data.date,
+            teacher: data.teacher,
+            type: "absence",
+            widget: CreateWidget("absence", data.msgID, data.date, `Absence: ${data.teacher}`)
+        });
     }
 
-    if (type === '' || type === 'appeal') {
-        for (const data of calendar.appealAndShifts) {
-            elementsData.push({
-                date: data.date,
-                teacher: '',
-                type: "appeal",
-                widget: CreateWidget("appealshifts", data.msgID, data.date, data.title)
-            });
-        }
+    for (const data of calendar.appealAndShifts) {
+        elementsData.push({
+            date: data.date,
+            teacher: '',
+            type: "appeal",
+            widget: CreateWidget("appealshifts", data.msgID, data.date, data.title)
+        });
     }
 
-    if (type === '' || type === 'test') {
-        for (const data of calendar.tests) {
-            elementsData.push({
-                date: data.date,
-                teacher: data.teacher,
-                type: "test",
-                widget: CreateWidget("test", data.msgID, data.date, `${data.lesson} - ${data.type}`, data.description)
-            });
-        }
+    for (const data of calendar.tests) {
+        elementsData.push({
+            date: data.date,
+            teacher: data.teacher,
+            type: "test",
+            widget: CreateWidget("test", data.msgID, data.date, `${data.lesson} - ${data.type}`, data.description)
+        });
     }
 
     elementsData.sort((obj1, obj2) => {

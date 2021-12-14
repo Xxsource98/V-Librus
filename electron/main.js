@@ -27,7 +27,7 @@ app.on('ready', () => {
 
     mainWindow.on('quit', () => app.quit());
     mainWindow.loadURL(isDev ? "http://localhost:3000/" : `file://${path.join(__dirname, '../build/index.html')}`);
-
+    
     mainWindow.webContents.setWindowOpenHandler(({ url }) => { // Open an urls with default web browser
         shell.openExternal(url);
 

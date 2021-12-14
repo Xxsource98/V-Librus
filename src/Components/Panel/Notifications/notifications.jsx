@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 
-import { globalDataContext } from '../../../globalContext';
+import { GlobalDataContext, ShortcutsPanelContext } from '../../../globalContext';
 import { MainPanel, NavigatePanel } from '../mainPanel';
-import PanelShortcuts from '../panelShortcuts';
 
 import Arrow from '../../../Images/img/Arrow.png';
 
@@ -10,7 +9,18 @@ import '../Messages/messages.scss'; // Use the same one as Messages, because the
 import '../panel.scss';
 
 const Notifications = () => {
-    const [ dataContext, ] = useContext(globalDataContext);
+    const [ dataContext, ] = useContext(GlobalDataContext);
+    const [ currentPanel, setCurrentPanel ] = useContext(ShortcutsPanelContext);
+
+    const CheckPanel = useCallback((panel) => {
+        if (currentPanel !== panel) {
+            setCurrentPanel(panel);
+        }
+    }, [currentPanel, setCurrentPanel]);
+
+    useEffect(() => {
+        CheckPanel('Notifications');
+    }, [CheckPanel]);
 
     const DrawMessages = () => {
         const allNotifications = dataContext.librusData.notifications;
@@ -77,16 +87,12 @@ const Notifications = () => {
 
     const componentToDraw = (
         <div>
-            <div className="panel-section">
+            <div className="panel-section panel-padding">
                 <p className="panel-header">Notifications</p>
                 <NavigatePanel />
                 <div className="messages">
                     <DrawMessagesTable />
                 </div>
-            </div>
-            <div className="panel-section">
-                <p className="panel-header">Shortcuts</p>
-                <PanelShortcuts currentPanel="Notifications" />
             </div>
         </div>
     );

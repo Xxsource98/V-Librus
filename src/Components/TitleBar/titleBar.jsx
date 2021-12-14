@@ -5,7 +5,7 @@ import close from '../..//Images/svg/CloseSVG.svg'
 import resize from '../../Images/svg/ResizeSVG.svg'
 import minimize from '../../Images/svg/MinimalizeSVG.svg'
 
-import { globalDataContext } from '../../globalContext';
+import { GlobalDataContext } from '../../globalContext';
 import { useHistory } from 'react-router-dom';
 
 import appVersionFile from '../../.version';
@@ -14,7 +14,7 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 const isMac = process.platform === "darwin";
 
 const Titlebar = () => {
-    const [ dataContext, setDataContext ] = useContext(globalDataContext);
+    const [ dataContext, setDataContext ] = useContext(GlobalDataContext);
     const [ appVersion, setAppVersion ] = useState("");
     const history = useHistory();
 

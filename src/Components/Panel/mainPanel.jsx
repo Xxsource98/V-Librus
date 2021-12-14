@@ -1,6 +1,8 @@
 import React, { useContext, useReducer } from 'react';
-import {  Redirect , useHistory} from 'react-router-dom';
-import { globalDataContext } from '../../globalContext';
+import { Redirect , useHistory} from 'react-router-dom';
+import { motion } from 'framer-motion';
+
+import { GlobalDataContext } from '../../globalContext';
 
 import Arrow from '../../Images/img/Arrow.png';
 
@@ -27,13 +29,18 @@ const NavigatePanel = () => {
 const MainPanel = ({
     componentInside = null
 }) => {
-    const [ dataContext, ] = useContext(globalDataContext);
+    const [ dataContext, ] = useContext(GlobalDataContext);
 
     if (dataContext.loginData.isLogged) {
         return (
-            <div className="main-panel" >
-                {componentInside}
-            </div>)
+            <motion.div 
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                exit={{opacity: 0}}>
+                <div className="main-panel">
+                    {componentInside}
+                </div>
+            </motion.div>);
     } else return (<Redirect to="/" />)
 }
 

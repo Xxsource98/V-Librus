@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { globalDataContext } from '../../../globalContext';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
+import { GlobalDataContext, ShortcutsPanelContext } from '../../../globalContext';
 
 import { MainPanel, NavigatePanel } from '../mainPanel';
-import PanelShortcuts from '../panelShortcuts';
 
 import Arrow from '../../../Images/img/Arrow.png';
 
@@ -10,10 +9,19 @@ import '../panel.scss';
 import './grades.scss';
 
 const Grades = () => {
-    const [ dataContext, ] = useContext(globalDataContext);
+    const [ dataContext, ] = useContext(GlobalDataContext);
+    const [ currentPanel, setCurrentPanel ] = useContext(ShortcutsPanelContext);
     const [ currentSemester, setCurrentSemester ] = useState("first");
 
+    const CheckPanel = useCallback((panel) => {
+        if (currentPanel !== panel) {
+            setCurrentPanel(panel);
+        }
+    }, [currentPanel, setCurrentPanel]);
+
     useEffect(() => {
+        CheckPanel('Grades');
+
         // Update To Second Semester Automatically if it exists
         let grades = dataContext.librusData.grades;
 
@@ -24,21 +32,7 @@ const Grades = () => {
                 }
             }
         }
-    }, [dataContext]);
-
-    /*const setGradeBackground = weightString => { // Set Grade Background depending on grade's weight
-        const weight = parseInt(weightString);
-
-        switch (weight) {
-            case 8: case 9: case 10:
-                return "#eb4d4b";
-
-            case 5: case 6: case 7:
-                return "#f0932b";
-
-            default: return "#686de0";
-        } 
-    }*/
+    }, [dataContext, CheckPanel]);
 
     const setGradeBackground = (gradeString, isDescBackground) => { // Set Grade Background depending on grade's value
         const parsedGrade = parseInt(gradeString);
@@ -74,21 +68,6 @@ const Grades = () => {
         } 
     }
 
-    const switchDescriptionMenu = target => {
-        const currentElement = target.localName === "p" ? target.parentElement : target; // Detect if we press on the grade box or grade text (Just fixed bug)
-        currentElement.classList.toggle("active");
-
-        // Reset all actives widgets
-        const selector = document.querySelectorAll(".grade-widget.active");
-        if (selector.length > 0) {
-            for (const select of selector) {
-                if (select === currentElement) continue;
-
-                select.classList.remove("active");
-            }
-        }
-    }
-
     const drawGradesWidgets = (grades, subject) => {
         let returnData = [];
         let gradeIndex = 0;
@@ -121,7 +100,7 @@ const Grades = () => {
                 returnData.push(
                     <div className="grade-widget" style={{
                         backgroundColor: setGradeBackground(grade.grade, false)
-                    }} onClick={click => switchDescriptionMenu(click.target)} key={`${subject}:${gradeIndex}`}>
+                    }} key={`${subject}:${gradeIndex}`}>
                         <p>{grade.grade}</p>
                         <div className="grade-widget-desc" style={{
                             backgroundColor: setGradeBackground(grade.grade, true)
@@ -226,9 +205,50 @@ const Grades = () => {
         return returnData;
     }
 
-    const DrawGradesTable = () => {        
+    const DrawGradesTable = () => {   
+        let gradeActive = false;
+                
+        const HandleActiveGrade = (e) => {
+            const target = e.target;
+            const parent = e.target.parentElement;
+    
+            const ResetGrades = () => {
+                if (gradeActive) {
+                    const selector = document.querySelectorAll(".grade-widget.active");
+                    if (selector.length > 0) {
+                        for (const select of selector) {
+                            select.classList.remove("active");
+                        }
+                    }
+    
+                    gradeActive = false;
+                }
+            }
+
+            if (target.classList.contains('grade-widget') || parent.classList.contains('grade-widget')) {
+                if (!gradeActive) {
+                    gradeActive = true;
+    
+                    const currentElement = target.localName === "p" ? target.parentElement : target; // Detect if we press on the grade box or grade text (Just fixed bug)
+                    currentElement.classList.toggle("active");
+    
+                    // Reset all actives widgets
+                    const selector = document.querySelectorAll(".grade-widget.active");
+                    if (selector.length > 0) {
+                        for (const select of selector) {
+                            if (select === currentElement) continue;
+    
+                            select.classList.remove("active");
+                        }
+                    }
+                }
+                else ResetGrades();         
+            }
+            else ResetGrades();
+        }
+
         return (
-            <table className="grades-table">
+            <table onClick={HandleActiveGrade}>
                 <thead>
                     <tr>
                         <th width="25%">Lesson</th>
@@ -260,17 +280,13 @@ const Grades = () => {
 
     const componentToDraw = (
         <div>
-            <div className="panel-section">
+            <div className="panel-section panel-padding">
                 <p className="panel-header">Grades</p>
                 <NavigatePanel />
                 <DrawChangeSemesterSection />
                 <div className="grades">
                     <DrawGradesTable />
                 </div>
-            </div>
-            <div className="panel-section">
-                <p className="panel-header">Shortcuts</p>
-                <PanelShortcuts currentPanel="Grades" />
             </div>
         </div>
     );

@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useContext } from 'react';
 import { useHistory } from "react-router";
 
-import { globalDataContext } from '../globalContext';
+import { GlobalDataContext } from '../globalContext';
 
 const HandleRefresh = () => {
     const history = useHistory();
-    const [ dataContext, ] = useContext(globalDataContext);
+    const [ dataContext, ] = useContext(GlobalDataContext);
 
     const RefreshCallback = useCallback(() => {
         if (dataContext.loginData.isLogged) {

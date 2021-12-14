@@ -157,11 +157,11 @@ const HandleMessages = (
         return data;
     });
 
-    ipcMain.handle("remove-message", async (ev, messageID) => {
-        const data = await librusData.removeMessage(messageID);
+    ipcMain.handle('fetch-absence-data', async (ev, absenceID) => {
+        const data = await librusData.getAbsenceInfo(absenceID);
 
         return data;
-    });
+    })
 }
 
 module.exports = HandleMessages;

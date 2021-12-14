@@ -10,10 +10,16 @@ body {
     font-size: 19px;
     background: $backgroundColor;
     color: $fontColor;
+    overflow-x: hidden;
+    overflow-y: hidden;
 
     ::-webkit-scrollbar {
         height: 8px;
         background: #191e24;
+    }
+
+    ::-webkit-scrollbar-track {
+        margin-bottom: 38px;
     }
 
     ::-webkit-scrollbar-thumb {

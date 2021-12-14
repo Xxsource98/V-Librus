@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 
-import { globalDataContext } from '../../../globalContext';
+import { GlobalDataContext, ShortcutsPanelContext } from '../../../globalContext';
 import { MainPanel, NavigatePanel } from '../mainPanel';
-import PanelShortcuts from '../panelShortcuts';
 
 import Arrow from '../../../Images/img/Arrow.png';
 import LoadingIcon from '../../../Images/img/Loading.png';
@@ -13,7 +12,20 @@ import './messages.scss';
 const ipcRenderer = window.require("electron").ipcRenderer;
 
 const Messages = () => {
-    const [ dataContext, ] = useContext(globalDataContext);
+    const [ dataContext, ] = useContext(GlobalDataContext);
+    const [ currentPanel, setCurrentPanel ] = useContext(ShortcutsPanelContext);
+
+    console.log('Yes I know there is a big mistake with div append in the table cell but idc, it works so I can be happy lol');
+
+    const CheckPanel = useCallback((panel) => {
+        if (currentPanel !== panel) {
+            setCurrentPanel(panel);
+        }
+    }, [currentPanel, setCurrentPanel]);
+
+    useEffect(() => {
+        CheckPanel('Messages');
+    }, [CheckPanel]);
 
     const DrawMessages = () => {
         const allMessages = dataContext.librusData.messages;
@@ -60,7 +72,7 @@ const Messages = () => {
 
         for (const message of allMessages) {
             returnData.push(
-                <tr data-value={message.id} className={message.read ? "readed" : "not-readed"} onClick={click => switchActiveTr(click)}>
+                <tr data-value={message.id} className={message.read ? "readed" : "not-readed"} onClick={click => switchActiveTr(click)} key={message.id}>
                     <td>{message.user}</td>
                     <td>{message.title}</td>
                     <td>{message.date}</td>
@@ -70,7 +82,7 @@ const Messages = () => {
 
             // Yes, I know I should put it in tr tag, but when I did that it was too buggy and it's works now so lol
             returnData.push(
-                <div className="message-dropdown" key={message.id}> 
+                <div className="message-dropdown" key={`${message.id}-2`}> 
                     <div>
                         <img className="load" src={LoadingIcon} alt={LoadingIcon} />
                         <p></p>
@@ -89,7 +101,7 @@ const Messages = () => {
                     <tr>
                         <th width="21%">Sender</th>
                         <th>Title</th>
-                        <th width="11%">Date</th>
+                        <th width="14%">Date</th>
                         <th width="1.5%"></th>
                     </tr>
                 </thead>
@@ -102,16 +114,12 @@ const Messages = () => {
 
     const componentToDraw = (
         <div>
-            <div className="panel-section">
+            <div className="panel-section panel-padding">
                 <p className="panel-header">Messages</p>
                 <NavigatePanel />
                 <div className="messages">
                     <DrawMessagesTable />
                 </div>
-            </div>
-            <div className="panel-section">
-                <p className="panel-header">Shortcuts</p>
-                <PanelShortcuts currentPanel="Messages" />
             </div>
         </div>
     );

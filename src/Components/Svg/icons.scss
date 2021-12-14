@@ -1,0 +1,24 @@
+svg {
+    path, polygon, line, text {
+        transition: all 0.05s ease;
+    }
+}
+
+// Home
+.home-cls-1{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:5px;}
+
+// Grades 
+.grades-cls-1,.grades-cls-2{fill:#fff;}.grades-cls-2{font-size:45px;font-family:Aller;}
+
+// Schedule
+.schedule-cls-1,.schedule-cls-3,.schedule-cls-4{fill:#fff;}.schedule-cls-2{fill:none;}.schedule-cls-2,
+.schedule-cls-3,.schedule-cls-4{stroke:#fff;stroke-miterlimit:10;}.schedule-cls-2,.schedule-cls-4{stroke-width:5px;}
+
+// Message
+.message-cls-1{fill:#fff;}.message-cls-2,.message-cls-3{fill:none;stroke-miterlimit:10;stroke-width:5px;}.message-cls-2{stroke:#000;}.message-cls-3{stroke:#fff;}
+
+// Notifications
+.notification-cls-1{fill:#fff;}.notification-cls-2{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:5px;}
+
+// Absence
+.absence-cls-1{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:5px;}.absence-cls-2{fill:#fff;}

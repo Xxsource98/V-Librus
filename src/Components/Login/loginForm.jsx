@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { trackPromise, usePromiseTracker  } from 'react-promise-tracker';
-import { globalDataContext } from '../../globalContext';
+import { GlobalDataContext } from '../../globalContext';
 import { Redirect, useLocation } from 'react-router-dom';
 
 import appVersion from '../../.version';
@@ -12,7 +12,7 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 const LoginForm = () => {
     const location = useLocation();
     const { promiseInProgress } = usePromiseTracker();
-    const [ , setDataContext ] = useContext(globalDataContext);
+    const [ , setDataContext ] = useContext(GlobalDataContext);
 
     const [ shouldRedirect, setRedirect ] = useState(false);
     const [ username, setUsername] = useState("");

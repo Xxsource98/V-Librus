@@ -1,0 +1,54 @@
+.shortcuts-panel {
+    background: #171a1bd3;
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    backdrop-filter: blur(25px);
+
+    .shortcut {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+        padding: 15px;
+        width: 80px;
+        height: 50px;
+        justify-content: center;
+        outline: none;
+
+        svg {
+            position: relative;
+            transition: all 0.25s ease;
+            width: 64px;
+            top: 0;
+            height: auto;
+            transition: all 0.25s ease;
+        }
+
+        p {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            font-size: 0.85rem;
+            top: 28px;
+            opacity: 0;
+            transition: all 0.15s ease;
+        }
+
+        &:hover {
+            svg {
+                top: -5px;
+            }
+
+            p {
+                opacity: 1;
+                top: 30px;
+            }
+        }
+    }
+}

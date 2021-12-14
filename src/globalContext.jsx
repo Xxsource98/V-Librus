@@ -1,3 +1,6 @@
 import React from 'react';
 
-export const globalDataContext = React.createContext();
+const GlobalDataContext = React.createContext();
+const ShortcutsPanelContext = React.createContext();
+
+export { GlobalDataContext, ShortcutsPanelContext }

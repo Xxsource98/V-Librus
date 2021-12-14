@@ -160,7 +160,7 @@ class librusData {
                 dataToSend.grades = returnData; 
             });
             await this.librusData.info.getAccountInfo().then(data => dataToSend.accountInfo = data);
-            await this.librusData.absence.getAbsences().then(data => dataToSend.absences = data);
+            await this.librusData.absence.getAbsences().then(data => dataToSend.absences = data[0]);
             
             const getEventData = async event => { // Fix on Windows
                 let type = "unknown";
@@ -424,6 +424,19 @@ class librusData {
             });
         })  
     }
+
+    async getAbsenceInfo(absence) {
+        return new Promise(async (resolve, reject) => {
+            await this.librusData.absence.getAbsence(absence).then(data => {
+                if (data !== null) {
+                    resolve(data);
+                }
+                else {
+                    resolve('fail');
+                }
+            })
+        });
+    } 
 }
 
 module.exports = librusData;

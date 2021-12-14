@@ -1,6 +1,6 @@
 {
   "name": "v-librus",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": true,
   "author": "Xxsource98 <fake@xx.com>",
   "license": "GPL-3.0",
@@ -13,7 +13,8 @@
     "cross-env": "^7.0.3",
     "electron-is-dev": "^2.0.0",
     "electron-shortcut": "^0.5.0",
-    "librus-api": "git://github.com/Mati365/librus-api.git",
+    "framer-motion": "^4.1.17",
+    "librus-api": "git://github.com/Xxsource98/librus-api.git",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-promise-tracker": "^2.1.0",
