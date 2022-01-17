@@ -10,6 +10,7 @@ const HandleRefresh = () => {
     const RefreshCallback = useCallback(() => {
         if (dataContext.loginData.isLogged) {
             const timer = setTimeout(() => {
+                dataContext.loginData.isLogged = false;
                 history.go('/');
             }, 1800000); // Refresh in 30 minutes for "refresh" data
             return () => clearTimeout(timer);

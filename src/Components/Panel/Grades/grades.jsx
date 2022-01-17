@@ -184,7 +184,7 @@ const Grades = () => {
         return isNaN(result) ? "-" : result;
     }
 
-    const drawGradesRows = () => {
+    const DrawGradesRows = () => {
         let grades = dataContext.librusData.grades;
         let returnData = [];
 
@@ -196,13 +196,13 @@ const Grades = () => {
                 <tr key={`${grade.subject}`}>
                     <td>{grade.subject}</td>
                     <td>{drawGradesWidgets(gradesList.normal, grade.subject)}</td>
-                    <td style={{textAlign: 'center', color: average < 1.75 ? '#e74c3c' : ''}}>{calculateAverageGrade(gradesList.normal)}</td>
-                    <td style={{textAlign: 'center', fontWeight: '500'}}>{gradesList.final === "" ? "-" : gradesList.final}</td>
+                    <td style={{textAlign: 'center', color: average < 2 ? '#e74c3c' : ''}}>{calculateAverageGrade(gradesList.normal)}</td>
+                    <td style={{textAlign: 'center', fontWeight: '500'}}>{gradesList.final.grade === "" ? "-" : gradesList.final.grade}</td>
                 </tr>
             )
         }
 
-        return returnData;
+        return (<>{returnData}</>);
     }
 
     const DrawGradesTable = () => {   
@@ -258,7 +258,7 @@ const Grades = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {drawGradesRows()}
+                    <DrawGradesRows />
                 </tbody>
             </table>
         )

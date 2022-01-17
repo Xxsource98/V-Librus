@@ -161,7 +161,13 @@ const HandleMessages = (
         const data = await librusData.getAbsenceInfo(absenceID);
 
         return data;
-    })
+    });
+
+    ipcMain.handle('fetch-messages', async ev => {
+        const data = await librusData.fetchMessages(5);
+
+        return data;
+    });
 }
 
 module.exports = HandleMessages;

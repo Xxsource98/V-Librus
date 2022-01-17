@@ -361,7 +361,7 @@ class librusData {
 
             await this.librusData.inbox.listAnnouncements().then(data => dataToSend.notifications = data);
             
-            await this.librusData.inbox.listInbox(5).then(async data => dataToSend.messages = data);
+            //await this.librusData.inbox.listInbox(5).then(async data => dataToSend.messages = data);
 
             await this.librusData.info.getLuckyNumber().then(data => {
                 const luckyNumber = parseInt(data);
@@ -388,6 +388,19 @@ class librusData {
         });
     }
     
+    fetchMessages(inboxID) { // Default inboxID is 5
+        return new Promise(async (resolve, reject) => {
+            await this.librusData.inbox.listInbox(inboxID).then(async data => {
+                if (data !== null) {
+                    resolve(data);
+                }
+                else {
+                    reject('Failed');
+                }
+            });
+        });
+    }
+
     login(login, password) {
         return new Promise((resolve, reject) => {
             this.librusData.authorize(login, password).then(() => {

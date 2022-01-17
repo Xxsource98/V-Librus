@@ -102,8 +102,19 @@ const CreateWidgets = ({
 
         returnData.push(element.widget);
     }
-    
-    return (<>{returnData}</>);
+
+    if (returnData.length === 0) {
+        const EventName = type === 'appeal' ? 'Appeals and Shifts' : type === 'test' ? 'Tests' : 'Absences';
+
+        return (
+            <div className='no-events'>
+                <p>There aren't any {EventName} soon</p>
+            </div>
+        );
+    }
+    else {
+        return returnData;
+    }
 }
 
 export default CreateWidgets;

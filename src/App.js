@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
-import { GlobalDataContext, ShortcutsPanelContext } from './globalContext';
+import { GlobalDataContext, ShortcutsPanelContext, MessagesContext } from './globalContext';
 import PanelShortcuts from './Components/Panel/panelShortcuts';
 
 import HandleRefresh from './Components/handleRefresh';
@@ -26,6 +26,7 @@ const App = () => {
     }
   });
   const [ currentPanel, setCurrentPanel ] = useState('Home');
+  const [ messagesContext, setMessagesContext ] = useState([]);
 
   return (
     <Router>
@@ -33,18 +34,20 @@ const App = () => {
         <Switch>
           <GlobalDataContext.Provider value={[dataContext, setDataContext]}>
             <ShortcutsPanelContext.Provider value={[currentPanel, setCurrentPanel]}>
-              <HandleRefresh />
-              <Titlebar />
-              <Route exact path="/" component={LoginForm} />
-              <Route exact path="/panel" component={Panel} />
+              <MessagesContext.Provider value={[messagesContext, setMessagesContext]}>
+                <HandleRefresh />
+                <Titlebar />
+                <Route exact path="/" component={LoginForm} />
+                <Route exact path="/panel" component={Panel} />
 
-              <Route exact path="/panel/allCalendarWidgets/:type" component={AllCalendarWidgets} />
-              <Route exact path="/panel/schedule" component={Schedule} />
-              <Route exact path="/panel/grades" component={Grades} />
-              <Route exact path="/panel/messages" component={Messages} />
-              <Route exact path="/panel/notifications" component={Notifications} />
-              <Route exact path="/panel/absences" component={Absences} /> 
-              <PanelShortcuts />
+                <Route exact path="/panel/allCalendarWidgets/:type" component={AllCalendarWidgets} />
+                <Route exact path="/panel/schedule" component={Schedule} />
+                <Route exact path="/panel/grades" component={Grades} />
+                <Route exact path="/panel/messages" component={Messages} />
+                <Route exact path="/panel/notifications" component={Notifications} />
+                <Route exact path="/panel/absences" component={Absences} /> 
+                <PanelShortcuts />
+              </MessagesContext.Provider>
             </ShortcutsPanelContext.Provider>
           </GlobalDataContext.Provider>
         </Switch>

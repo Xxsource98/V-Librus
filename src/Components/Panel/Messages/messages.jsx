@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useCallback } from 'react';
+import { trackPromise, usePromiseTracker  } from 'react-promise-tracker';
 
-import { GlobalDataContext, ShortcutsPanelContext } from '../../../globalContext';
+import { MessagesContext, ShortcutsPanelContext } from '../../../globalContext';
 import { MainPanel, NavigatePanel } from '../mainPanel';
 
 import Arrow from '../../../Images/img/Arrow.png';
@@ -12,26 +13,35 @@ import './messages.scss';
 const ipcRenderer = window.require("electron").ipcRenderer;
 
 const Messages = () => {
-    const [ dataContext, ] = useContext(GlobalDataContext);
+    const { promiseInProgress } = usePromiseTracker();
+    const [ messagesContext, setMessagesContext ] = useContext(MessagesContext);
     const [ currentPanel, setCurrentPanel ] = useContext(ShortcutsPanelContext);
 
     console.log('Yes I know there is a big mistake with div append in the table cell but idc, it works so I can be happy lol');
-
+    
     const CheckPanel = useCallback((panel) => {
         if (currentPanel !== panel) {
             setCurrentPanel(panel);
         }
-    }, [currentPanel, setCurrentPanel]);
+
+        if (messagesContext.length === 0) {
+            trackPromise(ipcRenderer.invoke('fetch-messages').then(data => {
+                if (data !== 'Failed') {
+                    setMessagesContext(data);
+                }
+            }));
+        }
+    }, [currentPanel, setCurrentPanel, messagesContext, setMessagesContext]);
 
     useEffect(() => {
         CheckPanel('Messages');
     }, [CheckPanel]);
 
     const DrawMessages = () => {
-        const allMessages = dataContext.librusData.messages;
+        const allMessages = messagesContext;
         let returnData = [];
 
-        const switchActiveTr = async click => {
+        const switchActiveTr = async (click, message) => {
             const target = click.target.parentElement;
             const messageDiv = target.nextElementSibling;
             const tbody = document.querySelector("tbody");
@@ -67,12 +77,14 @@ const Messages = () => {
             if (target.classList.contains("not-readed")) {
                 target.classList.remove("not-readed");
                 target.classList.add("readed");
+
+                message.read = true;
             }
         }
 
         for (const message of allMessages) {
             returnData.push(
-                <tr data-value={message.id} className={message.read ? "readed" : "not-readed"} onClick={click => switchActiveTr(click)} key={message.id}>
+                <tr data-value={message.id} className={message.read ? "readed" : "not-readed"} onClick={click => switchActiveTr(click, message)} key={message.id}>
                     <td>{message.user}</td>
                     <td>{message.title}</td>
                     <td>{message.date}</td>
@@ -117,8 +129,13 @@ const Messages = () => {
             <div className="panel-section panel-padding">
                 <p className="panel-header">Messages</p>
                 <NavigatePanel />
-                <div className="messages">
-                    <DrawMessagesTable />
+                <div className={`messages ${promiseInProgress ? 'loading' : ''}`}>
+                    {
+                        promiseInProgress ? 
+                        <img src={LoadingIcon} alt={LoadingIcon} />
+                        :
+                        <DrawMessagesTable />
+                    }
                 </div>
             </div>
         </div>
@@ -126,7 +143,7 @@ const Messages = () => {
 
     return (
         <MainPanel componentInside={componentToDraw} />
-    )
+    );
 }
 
 export default Messages;

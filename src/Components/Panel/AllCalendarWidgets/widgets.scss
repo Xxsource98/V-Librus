@@ -8,6 +8,19 @@
     padding-bottom: 15px;
     transform-origin: left right;
 
+    .no-events {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+        font-weight: 300;
+
+        p {
+            color: #f3f3f3;
+        }
+    }
+
     .widget {
         position: relative;
         background-color: rgb(49, 49, 49);
